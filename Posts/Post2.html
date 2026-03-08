@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The 60-Second Phone Addiction Test | Are You Actually Addicted?</title>
+    <meta name="description" content="Take this quick clinical assessment to see if you're addicted to your phone. Most people are surprised by the results. Includes personalized action plan.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.7;
+            color: #333;
+            background: #f9f9f9;
+        }
+
+        nav {
+            background: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav a {
+            color: #667eea;
+            text-decoration: none;
+            margin: 0 1rem;
+            font-weight: 600;
+        }
+
+        article {
+            max-width: 800px;
+            margin: 3rem auto;
+            background: white;
+            padding: 3rem;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+        }
+
+        h1 {
+            font-size: 2.3rem;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ff9800;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .test-intro {
+            background: #f0f4ff;
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+
+        .question-box {
+            background: white;
+            border: 2px solid #e0e0e0;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            transition: border-color 0.3s;
+        }
+
+        .question-box:hover {
+            border-color: #667eea;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #2a2a2a;
+        }
+
+        .options {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .option {
+            flex: 1;
+            min-width: 120px;
+            padding: 0.8rem;
+            background: #f5f5f5;
+            border: 2px solid transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .option:hover {
+            background: #e8e8e8;
+        }
+
+        .option.selected {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .calculate-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 1.2rem 3rem;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 2rem;
+            font-weight: 600;
+            transition: transform 0.2s;
+        }
+
+        .calculate-btn:hover {
+            transform: scale(1.02);
+        }
+
+        .result-box {
+            display: none;
+            margin-top: 3rem;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .result-score {
+            font-size: 4rem;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+
+        .result-low {
+            background: #d4edda;
+            border: 2px solid #28a745;
+        }
+
+        .result-medium {
+            background: #fff3cd;
+            border: 2px solid #ff9800;
+        }
+
+        .result-high {
+            background: #f8d7da;
+            border: 2px solid #dc3545;
+        }
+
+        .action-plan {
+            background: #f9f9f9;
+            padding: 2rem;
+            margin-top: 2rem;
+            border-radius: 8px;
+            text-align: left;
+        }
+
+        ul {
+            margin: 1rem 0 1rem 2rem;
+        }
+
+        li {
+            margin-bottom: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            article {
+                padding: 1.5rem;
+                margin: 1rem;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .options {
+                flex-direction: column;
+            }
+
+            .option {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/">🎃 DigitalDetox.fun</a>
+        <a href="/blog.html">← Back to Blog</a>
+    </nav>
+
+    <article>
+        <h1>The 60-Second Phone Addiction Test</h1>
+        <p style="color: #666; margin-bottom: 2rem;">Are you actually addicted? Most people are shocked by their results.</p>
+
+        <div class="warning-box">
+            <strong>⚠️ Real talk:</strong> This isn't a clinical diagnosis. But it's based on research from behavioral psychology and addiction studies. If your results concern you, consider talking to a mental health professional.
+        </div>
+
+        <div class="test-intro">
+            <h3 style="margin-bottom: 1rem;">How This Works</h3>
+            <p>Answer these 8 questions honestly. There are no right or wrong answers—just what's true for you right now.</p>
+            <p style="margin-top: 1rem;">Each answer has a point value. Your total score will tell you where you stand and what to do next.</p>
+        </div>
+
+        <h2 style="margin: 2rem 0 1.5rem 0;">📋 Take The Test</h2>
+
+        <div id="questions">
+            <!-- Question 1 -->
+            <div class="question-box">
+                <div class="question-text">1. How often do you check your phone first thing in the morning (before getting out of bed)?</div>
+                <div class="options">
+                    <div class="option" data-points="0">Never</div>
+                    <div class="option" data-points="1">Sometimes</div>
+                    <div class="option" data-points="2">Usually</div>
+                    <div class="option" data-points="3">Always</div>
+                </div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question-box">
+                <div class="question-text">2. When you're in line or waiting, do you automatically reach for your phone?</div>
+                <div class="options">
+                    <div class="option" data-points="0">Rarely</div>
+                    <div class="option" data-points="1">Sometimes</div>
+                    <div class="option" data-points="2">Often</div>
+                    <div class="option" data-points="3">Every time</div>
+                </div>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="question-box">
+                <div class="question-text">3. How anxious do you feel when you can't find your phone or it's dead?</div>
+                <div class="options">
+                    <div class="option" data-points="0">Not anxious</div>
+                    <div class="option" data-points="1">Mildly concerned</div>
+                    <div class="option" data-points="2">Pretty anxious</div>
+                    <div class="option" data-points="3">Panic mode</div>
+                </div>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="question-box">
+                <div class="question-text">4. Do you use your phone while having meals with others?</div>
+                <div class="options">
+                    <div class="option" data-points="0">Never</div>
+                    <div class="option" data-points="1">Occasionally</div>
+                    <div class="option" data-points="2">Frequently</div>
+                    <div class="option" data-points="3">Almost always</div>
+                </div>
+            </div>
+
+            <!-- Question 5 -->
+            <div class="question-box">
+                <div class="question-text">5. How often do you reach for your phone with no specific purpose, just to "check"?</div>
+                <div class="options">
+                    <div class="option" data-points="0">Rarely</div>
+                    <div class="option" data-points="1">Few times daily</div>
+                    <div class="option" data-points="2">Many times daily</div>
+                    <div class="option" data-points="3">Constantly</div>
+                </div>
+            </div>
+
+            <!-- Question 6 -->
+            <div class="question-box">
+                <div class="question-text">6. Has someone close to you complained about your phone use?</div>
+                <div class="options">
+                    <div class="option" data-points="0">Never</div>
+                    <div class="option" data-points="1">Once or twice</div>
+                    <div class="option" data-points="2">Several times</div>
+                    <div class="option" data-points="3">Regularly</div>
+                </div>
+            </div>
+
+            <!-- Question 7 -->
+            <div class="question-box">
+                <div class="question-text">7. Do you use your phone in bed before sleeping or right after waking?</div>
+                <div class="options">
+                    <div class="option" data-points="0">Rarely</div>
+                    <div class="option" data-points="1">Sometimes</div>
+                    <div class="option" data-points="2">Often</div>
+                    <div class="option" data-points="3">Every night/morning</div>
+                </div>
+            </div>
+
+            <!-- Question 8 -->
+            <div class="question-box">
+                <div class="question-text">8. Have you tried to cut down phone use and failed?</div>
+                <div class="options">
+                    <div class="option" data-points="0">Never tried</div>
+                    <div class="option" data-points="1">Tried once, didn't stick</div>
+                    <div class="option" data-points="2">Multiple failed attempts</div>
+                    <div class="option" data-points="3">Lost count of attempts</div>
+                </div>
+            </div>
+        </div>
+
+        <button class="calculate-btn" onclick="calculateScore()">📊 Show My Results</button>
+
+        <div id="result" class="result-box">
+            <h2>Your Score</h2>
+            <div class="result-score" id="scoreNumber"></div>
+            <h3 id="resultTitle"></h3>
+            <p id="resultDescription"></p>
+            
+            <div class="action-plan">
+                <h3>📝 Your Personalized Action Plan</h3>
+                <div id="actionPlan"></div>
+            </div>
+
+            <div style="margin-top: 2rem; padding: 1.5rem; background: #f0f4ff; border-radius: 8px;">
+                <h4 style="margin-bottom: 1rem;">🎯 Next Step</h4>
+                <p>The best way to improve? Start tracking your actual usage and take daily challenges.</p>
+                <a href="/" style="display: inline-block; margin-top: 1rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 1rem 2rem; text-decoration: none; border-radius: 6px; font-weight: 600;">Start Free Tracker →</a>
+            </div>
+        </div>
+
+    </article>
+
+    <footer style="background: #f5f5f5; padding: 2rem; text-align: center; color: #666; margin-top: 3rem;">
+        <p>© 2026 DigitalDetox.fun | <a href="/" style="color: #667eea;">Free Tools</a> | <a href="/blog.html" style="color: #667eea;">More Articles</a></p>
+    </footer>
+
+    <script>
+        // Add click handlers to all options
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                // Remove selected from siblings
+                this.parentElement.querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                // Add selected to clicked option
+                this.classList.add('selected');
+            });
+        });
+
+        function calculateScore() {
+            let total = 0;
+            let answered = 0;
+
+            document.querySelectorAll('.question-box').forEach(box => {
+                const selected = box.querySelector('.option.selected');
+                if (selected) {
+                    total += parseInt(selected.dataset.points);
+                    answered++;
+                }
+            });
+
+            if (answered < 8) {
+                alert('Please answer all 8 questions to see your results.');
+                return;
+            }
+
+            // Show results
+            const resultBox = document.getElementById('result');
+            const scoreNumber = document.getElementById('scoreNumber');
+            const resultTitle = document.getElementById('resultTitle');
+            const resultDescription = document.getElementById('resultDescription');
+            const actionPlan = document.getElementById('actionPlan');
+
+            scoreNumber.textContent = total + '/24';
+
+            // Remove all result classes
+            resultBox.classList.remove('result-low', 'result-medium', 'result-high');
+
+            if (total <= 8) {
+                resultBox.classList.add('result-low');
+                resultTitle.textContent = '✅ Healthy Relationship';
+                resultDescription.textContent = 'You have a relatively healthy relationship with your phone. You\'re aware of your usage and maintain good boundaries. Keep it up!';
+                actionPlan.innerHTML = `
+                    <p><strong>Maintain your habits:</strong></p>
+                    <ul>
+                        <li>Continue being intentional about phone use</li>
+                        <li>Try one phone-free challenge per week to stay sharp</li>
+                        <li>Share your strategies with friends who might benefit</li>
+                    </ul>
+                `;
+            } else if (total <= 16) {
+                resultBox.classList.add('result-medium');
+                resultTitle.textContent = '⚠️ Moderate Concern';
+                resultDescription.textContent = 'You show signs of developing phone dependency. You\'re not alone—most Americans score in this range. The good news? Small changes can make a big difference.';
+                actionPlan.innerHTML = `
+                    <p><strong>Recommended actions:</strong></p>
+                    <ul>
+                        <li><strong>Start tracking:</strong> Log your screen time for one week to see patterns</li>
+                        <li><strong>Pick one boundary:</strong> Phone-free meals OR phone-free mornings (not both yet)</li>
+                        <li><strong>Replace the habit:</strong> Have a book or puzzle ready for "waiting time"</li>
+                        <li><strong>Set a goal:</strong> Reduce by 30 minutes this week, track progress daily</li>
+                    </ul>
+                    <p style="margin-top: 1rem;"><em>Check in after 2 weeks and retake this test.</em></p>
+                `;
+            } else {
+                resultBox.classList.add('result-high');
+                resultTitle.textContent = '🚨 High Dependency';
+                resultDescription.textContent = 'Your score indicates significant phone dependency that may be impacting your life, relationships, or well-being. This is common and fixable, but it requires intentional action.';
+                actionPlan.innerHTML = `
+                    <p><strong>Start here (don't try everything at once):</strong></p>
+                    <ul>
+                        <li><strong>Week 1:</strong> Just track. Use DigitalDetox.fun to log your actual usage. No changes yet—just awareness.</li>
+                        <li><strong>Week 2:</strong> Pick ONE small win. Example: No phone for first 30 minutes after waking.</li>
+                        <li><strong>Week 3:</strong> Add ONE daily challenge from our tracker.</li>
+                        <li><strong>Week 4:</strong> Tell someone you trust. Report progress daily.</li>
+                    </ul>
+                    <p style="margin-top: 1rem; padding: 1rem; background: white; border-left: 4px solid #dc3545;"><strong>Consider this:</strong> If your phone use is causing significant distress or you've tried many times to cut down and can't, talking to a therapist who specializes in behavioral addiction can help. This isn't weakness—it's smart.</p>
+                `;
+            }
+
+            resultBox.style.display = 'block';
+            resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+    </script>
+</body>
+</html>
