@@ -1,2 +1,943 @@
-12.14 4:27 PM
-<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> <title>Digital Detox Champion</title> <style> * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; } body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding-bottom: 80px; } .container { width: 100%; max-width: 600px; margin: 0 auto; padding: 15px; } .screen { display: none; } .screen.active { display: block; animation: fadeIn 0.3s; } @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } } .welcome-card { background: white; border-radius: 20px; padding: 40px 25px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.2); } .app-icon { width: 90px; height: 90px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 45px; } .welcome-card h1 { font-size: 26px; color: #1f2937; margin-bottom: 10px; } .welcome-card p { color: #6b7280; margin-bottom: 30px; font-size: 15px; } input { width: 100%; padding: 14px; border: 2px solid #e5e7eb; border-radius: 12px; font-size: 16px; margin-bottom: 15px; } input:focus { outline: none; border-color: #6366f1; } .goal-slider { margin: 20px 0; } .goal-slider label { display: block; color: #374151; font-weight: 600; margin-bottom: 10px; font-size: 15px; } .goal-value { font-size: 32px; color: #6366f1; font-weight: bold; text-align: center; margin: 15px 0; } .btn { width: 100%; padding: 16px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; transition: transform 0.2s; } .btn:active { transform: scale(0.98); } .header { background: white; border-radius: 15px; padding: 20px; margin-bottom: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); } .header h1 { font-size: 22px; color: #1f2937; margin-bottom: 5px; } .header p { color: #6b7280; font-size: 14px; } .user-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 15px; } .stat-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 15px; border-radius: 12px; text-align: center; color: white; } .stat-value { font-size: 24px; font-weight: bold; } .stat-label { font-size: 11px; opacity: 0.9; margin-top: 5px; } .card { background: white; border-radius: 15px; padding: 20px; margin-bottom: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); } .card-header { display: flex; align-items: center; margin-bottom: 15px; } .card-icon { width: 40px; height: 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 12px; font-size: 20px; } .card-title { font-size: 18px; font-weight: 600; color: #1f2937; } .time-input-group { display: flex; gap: 10px; margin-bottom: 15px; align-items: center; } .time-input-group label { flex: 1; color: #374151; font-size: 15px; } .time-input-group input { width: 80px; padding: 10px; margin: 0; } .app-breakdown { margin-top: 20px; padding-top: 20px; border-top: 2px solid #f3f4f6; } .breakdown-item { display: flex; align-items: center; margin-bottom: 12px; } .breakdown-item span { flex: 1; color: #374151; } .breakdown-inputs { display: flex; gap: 5px; } .breakdown-inputs input { width: 50px; padding: 6px; margin: 0; text-align: center; } .challenge-item { background: #f9fafb; border-radius: 12px; padding: 18px; margin-bottom: 12px; } .challenge-header { display: flex; justify-content: space-between; margin-bottom: 10px; } .challenge-title { font-weight: 600; color: #1f2937; font-size: 17px; } .challenge-points { background: #fbbf24; color: white; padding: 5px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; } .challenge-desc { color: #6b7280; font-size: 14px; margin-bottom: 12px; } .challenge-actions { display: flex; gap: 10px; } .btn-small { flex: 1; padding: 10px; border-radius: 8px; border: none; font-weight: 600; cursor: pointer; font-size: 14px; } .btn-complete { background: #10b981; color: white; } .btn-fail { background: #ef4444; color: white; } .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 1px solid #e5e7eb; display: flex; padding: 10px 0; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); } .nav-item { flex: 1; text-align: center; padding: 8px; color: #9ca3af; cursor: pointer; } .nav-item.active { color: #6366f1; } .nav-icon { font-size: 24px; margin-bottom: 3px; } .nav-label { font-size: 11px; } .tab-content { display: none; } .tab-content.active { display: block; } .success-popup { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 40px; border-radius: 20px; text-align: center; z-index: 1000; box-shadow: 0 20px 60px rgba(0,0,0,0.3); max-width: 90%; } .success-icon { font-size: 64px; margin-bottom: 20px; } .overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 999; } .chart { height: 200px; background: #f9fafb; border-radius: 12px; display: flex; align-items: flex-end; padding: 15px; gap: 8px; margin-bottom: 15px; } .chart-bar { flex: 1; background: linear-gradient(to top, #667eea 0%, #764ba2 100%); border-radius: 6px 6px 0 0; min-height: 20px; position: relative; } .chart-label { position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%); font-size: 11px; color: #6b7280; white-space: nowrap; } .leaderboard-item { display: flex; align-items: center; padding: 15px; background: #f9fafb; border-radius: 12px; margin-bottom: 10px; } .leaderboard-item.user { background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border: 2px solid #fbbf24; } .rank { width: 40px; height: 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 12px; font-size: 16px; } .rank.gold { background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); } .rank.silver { background: linear-gradient(135deg, #d1d5db 0%, #9ca3af 100%); } .rank.bronze { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); } .leaderboard-info { flex: 1; } .leaderboard-name { font-weight: 600; color: #1f2937; font-size: 15px; } .leaderboard-country { font-size: 12px; color: #6b7280; margin-top: 2px; } .leaderboard-stats { text-align: right; } .leaderboard-points { font-weight: bold; color: #1f2937; font-size: 15px; } .leaderboard-streak { font-size: 12px; color: #6b7280; margin-top: 2px; } </style> </head> <body> <div class="container"> <div id="welcomeScreen" class="screen active"> <div class="welcome-card"> <div class="app-icon"></div> <h1>Digital Detox Champion</h1> <p>Take control of your screen time</p> <input type="text" id="userName" placeholder="Your Name"> <input type="email" id="userEmail" placeholder="Email Address"> <div class="goal-slider"> <label>Daily Screen Time Goal</label> <input type="range" id="goalSlider" min="1" max="12" value="4" style="width: 100%;"> <div class="goal-value"><span id="goalValue">4</span> hours</div> </div> <button class="btn" onclick="startApp()">Start Your Journey </button> </div> </div> <div id="mainApp" class="screen"> <div class="header"> <h1>Welcome, <span id="displayName">Champion</span>!</h1> <p>Keep crushing your goals!</p> <div class="user-stats"> <div class="stat-card"> <div class="stat-value" id="totalPoints">0</div> <div class="stat-label">Points</div> </div> <div class="stat-card"> <div class="stat-value" id="currentStreak">0</div> <div class="stat-label">Day Streak </div> </div> <div class="stat-card"> <div class="stat-value">#<span id="globalRank">999</span></div> <div class="stat-label">Global Rank</div> </div> <div class="stat-card"> <div class="stat-value" id="challengesDone">0</div> <div class="stat-label">Challenges</div> </div> </div> </div> <div id="homeTab" class="tab-content active"> <div class="card"> <div class="card-header"> <div class="card-icon">⏱️</div> <div class="card-title">Log Today's Screen Time</div> </div> <div class="time-input-group"> <label>Total Time Today:</label> <input type="number" id="hoursInput" min="0" max="24" placeholder="0"> h <input type="number" id="minsInput" min="0" max="59" placeholder="0"> m </div> <div class="app-breakdown"> <strong style="color: #374151; display: block; margin-bottom: 10px;">Break it down (optional):</strong> <div class="breakdown-item"> <span> YouTube</span> <div class="breakdown-inputs"> <input type="number" id="youtube-h" min="0" placeholder="0">h <input type="number" id="youtube-m" min="0" max="59" placeholder="0">m </div> </div> <div class="breakdown-item"> <span> Instagram</span> <div class="breakdown-inputs"> <input type="number" id="instagram-h" min="0" placeholder="0">h <input type="number" id="instagram-m" min="0" max="59" placeholder="0">m </div> </div> <div class="breakdown-item"> <span> WhatsApp</span> <div class="breakdown-inputs"> <input type="number" id="whatsapp-h" min="0" placeholder="0">h <input type="number" id="whatsapp-m" min="0" max="59" placeholder="0">m </div> </div> <div class="breakdown-item"> <span> Games</span> <div class="breakdown-inputs"> <input type="number" id="games-h" min="0" placeholder="0">h <input type="number" id="games-m" min="0" max="59" placeholder="0">m </div> </div> <div class="breakdown-item"> <span> Other Apps</span> <div class="breakdown-inputs"> <input type="number" id="other-h" min="0" placeholder="0">h <input type="number" id="other-m" min="0" max="59" placeholder="0">m </div> </div> </div> <button class="btn" onclick="saveScreenTime()">Save Today's Data </button> </div> <div class="card"> <div class="card-header"> <div class="card-icon"></div> <div class="card-title">Today's Challenges</div> </div> <div id="challengesList"></div> </div> </div> <div id="statsTab" class="tab-content"> <div class="card"> <div class="card-header"> <div class="card-icon"></div> <div class="card-title">Your Progress</div> </div> <div style="margin-bottom: 20px;"> <div style="display: flex; justify-content: space-between; margin-bottom: 10px;"> <span style="color: #6b7280;">Goal: <strong id="userGoal">4</strong>h/day</span> <span style="color: #6b7280;">Today: <strong id="todayUsage">0</strong>h</span> </div> <div style="background: #e5e7eb; height: 8px; border-radius: 4px; overflow: hidden;"> <div id="progressBar" style="height: 100%; background: linear-gradient(90deg, #10b981 0%, #059669 100%); width: 0%;"></div> </div> </div> <div class="chart" id="weeklyChart"></div> <div style="display: flex; gap: 15px; margin-top: 15px;"> <div style="flex: 1; text-align: center; padding: 15px; background: #f9fafb; border-radius: 12px;"> <div style="font-size: 24px; font-weight: bold; color: #6366f1;" id="weekTotal">0</div> <div style="font-size: 12px; color: #6b7280; margin-top: 5px;">This Week</div> </div> <div style
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Digital Detox Champion</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding-bottom: 80px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 15px;
+        }
+
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .welcome-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 25px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .app-icon {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 45px;
+        }
+
+        .welcome-card h1 {
+            font-size: 26px;
+            color: #1f2937;
+            margin-bottom: 10px;
+        }
+
+        .welcome-card p {
+            color: #6b7280;
+            margin-bottom: 30px;
+            font-size: 15px;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #6366f1;
+        }
+
+        .goal-slider {
+            margin: 20px 0;
+        }
+
+        .goal-slider label {
+            display: block;
+            color: #374151;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+
+        .goal-value {
+            font-size: 32px;
+            color: #6366f1;
+            font-weight: bold;
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .header {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 22px;
+            color: #1f2937;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .user-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            color: white;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-size: 20px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .time-input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            align-items: center;
+        }
+
+        .time-input-group label {
+            flex: 1;
+            color: #374151;
+            font-size: 15px;
+        }
+
+        .time-input-group input {
+            width: 80px;
+            padding: 10px;
+            margin: 0;
+        }
+
+        .app-breakdown {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #f3f4f6;
+        }
+
+        .breakdown-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .breakdown-item span {
+            flex: 1;
+            color: #374151;
+        }
+
+        .breakdown-inputs {
+            display: flex;
+            gap: 5px;
+        }
+
+        .breakdown-inputs input {
+            width: 50px;
+            padding: 6px;
+            margin: 0;
+            text-align: center;
+        }
+
+        .challenge-item {
+            background: #f9fafb;
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 12px;
+        }
+
+        .challenge-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .challenge-title {
+            font-weight: 600;
+            color: #1f2937;
+            font-size: 17px;
+        }
+
+        .challenge-points {
+            background: #fbbf24;
+            color: white;
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .challenge-desc {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .challenge-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-small {
+            flex: 1;
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-complete {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-fail {
+            background: #ef4444;
+            color: white;
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-item {
+            flex: 1;
+            text-align: center;
+            padding: 8px;
+            color: #9ca3af;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .nav-item.active {
+            color: #6366f1;
+        }
+
+        .nav-icon {
+            font-size: 24px;
+            margin-bottom: 3px;
+        }
+
+        .nav-label {
+            font-size: 11px;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .success-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            z-index: 1000;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 90%;
+        }
+
+        .success-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+        .chart {
+            height: 200px;
+            background: #f9fafb;
+            border-radius: 12px;
+            display: flex;
+            align-items: flex-end;
+            padding: 15px;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .chart-bar {
+            flex: 1;
+            background: linear-gradient(to top, #667eea 0%, #764ba2 100%);
+            border-radius: 6px 6px 0 0;
+            min-height: 20px;
+            position: relative;
+        }
+
+        .chart-label {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 11px;
+            color: #6b7280;
+            white-space: nowrap;
+        }
+
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: #f9fafb;
+            border-radius: 12px;
+            margin-bottom: 10px;
+        }
+
+        .leaderboard-item.user {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 2px solid #fbbf24;
+        }
+
+        .rank {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 12px;
+            font-size: 16px;
+        }
+
+        .rank.gold {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+        }
+
+        .rank.silver {
+            background: linear-gradient(135deg, #d1d5db 0%, #9ca3af 100%);
+        }
+
+        .rank.bronze {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        }
+
+        .leaderboard-info {
+            flex: 1;
+        }
+
+        .leaderboard-name {
+            font-weight: 600;
+            color: #1f2937;
+            font-size: 15px;
+        }
+
+        .leaderboard-country {
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 2px;
+        }
+
+        .leaderboard-stats {
+            text-align: right;
+        }
+
+        .leaderboard-points {
+            font-weight: bold;
+            color: #1f2937;
+            font-size: 15px;
+        }
+
+        .leaderboard-streak {
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 2px;
+        }
+
+        /* Settings Panel Styles */
+        .settings-panel {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .settings-item {
+            padding: 15px;
+            background: #f9fafb;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .settings-item:hover {
+            background: #f3f4f6;
+        }
+
+        .settings-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-size: 20px;
+        }
+
+        .settings-info {
+            flex: 1;
+        }
+
+        .settings-title {
+            font-weight: 600;
+            color: #1f2937;
+            font-size: 15px;
+        }
+
+        .settings-desc {
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Welcome Screen -->
+        <div id="welcomeScreen" class="screen active">
+            <div class="welcome-card">
+                <div class="app-icon">🎃</div>
+                <h1>Digital Detox Champion</h1>
+                <p>Take control of your screen time</p>
+                <input type="text" id="userName" placeholder="Your Name">
+                <input type="email" id="userEmail" placeholder="Email Address">
+                <div class="goal-slider">
+                    <label>Daily Screen Time Goal</label>
+                    <input type="range" id="goalSlider" min="1" max="12" value="4" style="width: 100%;">
+                    <div class="goal-value"><span id="goalValue">4</span> hours</div>
+                </div>
+                <button class="btn" onclick="startApp()">Start Your Journey 🚀</button>
+            </div>
+        </div>
+
+        <!-- Main App -->
+        <div id="mainApp" class="screen">
+            <!-- Header -->
+            <div class="header">
+                <h1>Welcome, <span id="displayName">Champion</span>!</h1>
+                <p>Keep crushing your goals!</p>
+                <div class="user-stats">
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalPoints">0</div>
+                        <div class="stat-label">Points</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="currentStreak">0</div>
+                        <div class="stat-label">Day Streak 🔥</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">#<span id="globalRank">999</span></div>
+                        <div class="stat-label">Global Rank</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="challengesDone">0</div>
+                        <div class="stat-label">Challenges</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Home Tab -->
+            <div id="homeTab" class="tab-content active">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">📊</div>
+                        <div class="card-title">Log Today's Screen Time</div>
+                    </div>
+                    <div class="time-input-group">
+                        <label>Total Time Today:</label>
+                        <input type="number" id="hoursInput" min="0" max="24" placeholder="0"> h
+                        <input type="number" id="minsInput" min="0" max="59" placeholder="0"> m
+                    </div>
+                    <div class="app-breakdown">
+                        <strong style="color: #374151; display: block; margin-bottom: 10px;">Break it down (optional):</strong>
+                        <div class="breakdown-item">
+                            <span>📺 YouTube</span>
+                            <div class="breakdown-inputs">
+                                <input type="number" id="youtube-h" min="0" placeholder="0">h
+                                <input type="number" id="youtube-m" min="0" max="59" placeholder="0">m
+                            </div>
+                        </div>
+                        <div class="breakdown-item">
+                            <span>📸 Instagram</span>
+                            <div class="breakdown-inputs">
+                                <input type="number" id="instagram-h" min="0" placeholder="0">h
+                                <input type="number" id="instagram-m" min="0" max="59" placeholder="0">m
+                            </div>
+                        </div>
+                        <div class="breakdown-item">
+                            <span>💬 WhatsApp</span>
+                            <div class="breakdown-inputs">
+                                <input type="number" id="whatsapp-h" min="0" placeholder="0">h
+                                <input type="number" id="whatsapp-m" min="0" max="59" placeholder="0">m
+                            </div>
+                        </div>
+                        <div class="breakdown-item">
+                            <span>🎮 Games</span>
+                            <div class="breakdown-inputs">
+                                <input type="number" id="games-h" min="0" placeholder="0">h
+                                <input type="number" id="games-m" min="0" max="59" placeholder="0">m
+                            </div>
+                        </div>
+                        <div class="breakdown-item">
+                            <span>📱 Other Apps</span>
+                            <div class="breakdown-inputs">
+                                <input type="number" id="other-h" min="0" placeholder="0">h
+                                <input type="number" id="other-m" min="0" max="59" placeholder="0">m
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn" onclick="saveScreenTime()">Save Today's Data 📊</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">🎯</div>
+                        <div class="card-title">Today's Challenges</div>
+                    </div>
+                    <div id="challengesList"></div>
+                </div>
+            </div>
+
+            <!-- Stats Tab -->
+            <div id="statsTab" class="tab-content">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">📈</div>
+                        <div class="card-title">Your Progress</div>
+                    </div>
+                    <div style="margin-bottom: 20px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                            <span style="color: #6b7280;">Goal: <strong id="userGoal">4</strong>h/day</span>
+                            <span style="color: #6b7280;">Today: <strong id="todayUsage">0</strong>h</span>
+                        </div>
+                        <div style="background: #e5e7eb; height: 8px; border-radius: 4px; overflow: hidden;">
+                            <div id="progressBar" style="height: 100%; background: linear-gradient(90deg, #10b981 0%, #059669 100%); width: 0%;"></div>
+                        </div>
+                    </div>
+                    <div class="chart" id="weeklyChart"></div>
+                    <div style="display: flex; gap: 15px; margin-top: 15px;">
+                        <div style="flex: 1; text-align: center; padding: 15px; background: #f9fafb; border-radius: 12px;">
+                            <div style="font-size: 24px; font-weight: bold; color: #6366f1;" id="weekTotal">0</div>
+                            <div style="font-size: 12px; color: #6b7280; margin-top: 5px;">This Week</div>
+                        </div>
+                        <div style="flex: 1; text-align: center; padding: 15px; background: #f9fafb; border-radius: 12px;">
+                            <div style="font-size: 24px; font-weight: bold; color: #6366f1;" id="avgDaily">0</div>
+                            <div style="font-size: 12px; color: #6b7280; margin-top: 5px;">Daily Average</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">🏆</div>
+                        <div class="card-title">Global Leaderboard</div>
+                    </div>
+                    <div id="leaderboardList"></div>
+                </div>
+            </div>
+
+            <!-- Settings Tab -->
+            <div id="settingsTab" class="tab-content">
+                <div class="settings-panel">
+                    <div class="card-header">
+                        <div class="card-icon">⚙️</div>
+                        <div class="card-title">Settings</div>
+                    </div>
+                    
+                    <!-- Blog Link - NEW! -->
+                    <a href="/blog.html" class="settings-item">
+                        <div class="settings-icon">📚</div>
+                        <div class="settings-info">
+                            <div class="settings-title">Blog</div>
+                            <div class="settings-desc">Read articles about digital wellness</div>
+                        </div>
+                    </a>
+
+                    <a href="/tool.html" class="settings-item">
+                        <div class="settings-icon">🛠️</div>
+                        <div class="settings-info">
+                            <div class="settings-title">Recommended Tools</div>
+                            <div class="settings-desc">Products to help your digital detox journey</div>
+                        </div>
+                    </a>
+
+                    <div class="settings-item" onclick="editProfile()">
+                        <div class="settings-icon">👤</div>
+                        <div class="settings-info">
+                            <div class="settings-title">Edit Profile</div>
+                            <div class="settings-desc">Update your name and goal</div>
+                        </div>
+                    </div>
+
+                    <div class="settings-item" onclick="viewPrivacy()">
+                        <div class="settings-icon">🔒</div>
+                        <div class="settings-info">
+                            <div class="settings-title">Privacy Policy</div>
+                            <div class="settings-desc">Read our privacy policy</div>
+                        </div>
+                    </div>
+
+                    <div class="settings-item" onclick="viewTerms()">
+                        <div class="settings-icon">📄</div>
+                        <div class="settings-info">
+                            <div class="settings-title">Terms of Service</div>
+                            <div class="settings-desc">Read our terms</div>
+                        </div>
+                    </div>
+
+                    <div class="settings-item" onclick="clearData()">
+                        <div class="settings-icon">🗑️</div>
+                        <div class="settings-info">
+                            <div class="settings-title">Clear All Data</div>
+                            <div class="settings-desc">Delete all your data permanently</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <div class="nav-item active" onclick="switchTab('home')">
+                <div class="nav-icon">🏠</div>
+                <div class="nav-label">Home</div>
+            </div>
+            <div class="nav-item" onclick="switchTab('history')">
+                <div class="nav-icon">📊</div>
+                <div class="nav-label">History</div>
+            </div>
+            <div class="nav-item" onclick="switchTab('stats')">
+                <div class="nav-icon">🏆</div>
+                <div class="nav-label">Stats</div>
+            </div>
+            <div class="nav-item" onclick="switchTab('settings')">
+                <div class="nav-icon">⚙️</div>
+                <div class="nav-label">Settings</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Popup -->
+    <div class="overlay" id="overlay" onclick="closePopup()"></div>
+    <div class="success-popup" id="successPopup">
+        <div class="success-icon">✅</div>
+        <h2 style="margin-bottom: 10px;">Success!</h2>
+        <p style="color: #6b7280; margin-bottom: 20px;" id="popupMessage">Data saved successfully!</p>
+        <button class="btn" onclick="closePopup()">Continue</button>
+    </div>
+
+    <script>
+        // (Your existing JavaScript code continues here - I'm keeping all the original functionality intact)
+        
+        // Initialize app
+        let userData = {
+            name: '',
+            email: '',
+            goal: 4,
+            points: 0,
+            streak: 0,
+            rank: 999,
+            challengesCompleted: 0,
+            screenTimeData: {}
+        };
+
+        // Load saved data
+        if (localStorage.getItem('userData')) {
+            userData = JSON.parse(localStorage.getItem('userData'));
+            document.getElementById('welcomeScreen').classList.remove('active');
+            document.getElementById('mainApp').classList.add('active');
+            updateDisplay();
+        }
+
+        // Goal slider
+        document.getElementById('goalSlider').addEventListener('input', function() {
+            document.getElementById('goalValue').textContent = this.value;
+        });
+
+        function startApp() {
+            const name = document.getElementById('userName').value;
+            const email = document.getElementById('userEmail').value;
+            const goal = document.getElementById('goalSlider').value;
+
+            if (!name || !email) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            userData.name = name;
+            userData.email = email;
+            userData.goal = goal;
+            
+            localStorage.setItem('userData', JSON.stringify(userData));
+            
+            document.getElementById('welcomeScreen').classList.remove('active');
+            document.getElementById('mainApp').classList.add('active');
+            updateDisplay();
+            initializeChallenges();
+        }
+
+        function updateDisplay() {
+            document.getElementById('displayName').textContent = userData.name;
+            document.getElementById('totalPoints').textContent = userData.points;
+            document.getElementById('currentStreak').textContent = userData.streak;
+            document.getElementById('globalRank').textContent = userData.rank;
+            document.getElementById('challengesDone').textContent = userData.challengesCompleted;
+            document.getElementById('userGoal').textContent = userData.goal;
+        }
+
+        function saveScreenTime() {
+            const hours = parseInt(document.getElementById('hoursInput').value) || 0;
+            const mins = parseInt(document.getElementById('minsInput').value) || 0;
+            const totalHours = hours + (mins / 60);
+
+            if (totalHours === 0) {
+                alert('Please enter your screen time');
+                return;
+            }
+
+            const today = new Date().toISOString().split('T')[0];
+            userData.screenTimeData[today] = totalHours;
+            
+            if (totalHours <= userData.goal) {
+                userData.points += 50;
+                userData.streak += 1;
+            } else {
+                userData.streak = 0;
+            }
+
+            localStorage.setItem('userData', JSON.stringify(userData));
+            updateDisplay();
+            showPopup('Screen time logged! ' + (totalHours <= userData.goal ? '+50 points! 🎉' : 'Keep trying! 💪'));
+        }
+
+        function initializeChallenges() {
+            const challenges = [
+                { title: '2-Hour Phone-Free Focus', desc: 'No phone for 2 hours', points: 130 },
+                { title: 'Phone-Free Dinner', desc: 'Enjoy meals without phone', points: 50 },
+                { title: 'Bedtime Digital Detox', desc: '1 hour before sleep', points: 75 },
+                { title: 'Morning Without Phone', desc: 'Start day phone-free', points: 60 }
+            ];
+
+            const html = challenges.map(c => `
+                <div class="challenge-item">
+                    <div class="challenge-header">
+                        <div class="challenge-title">${c.title}</div>
+                        <div class="challenge-points">+${c.points} pts</div>
+                    </div>
+                    <div class="challenge-desc">${c.desc}</div>
+                    <div class="challenge-actions">
+                        <button class="btn-small btn-complete" onclick="completeChallenge(${c.points})">✓ Completed</button>
+                        <button class="btn-small btn-fail">✗ Failed</button>
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('challengesList').innerHTML = html;
+        }
+
+        function completeChallenge(points) {
+            userData.points += points;
+            userData.challengesCompleted += 1;
+            localStorage.setItem('userData', JSON.stringify(userData));
+            updateDisplay();
+            showPopup(`Challenge completed! +${points} points! 🎉`);
+        }
+
+        function switchTab(tab) {
+            // Remove active from all nav items and tabs
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+            // Add active to clicked tab
+            event.currentTarget.classList.add('active');
+            document.getElementById(tab + 'Tab').classList.add('active');
+        }
+
+        function showPopup(message) {
+            document.getElementById('popupMessage').textContent = message;
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('successPopup').style.display = 'block';
+        }
+
+        function closePopup() {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('successPopup').style.display = 'none';
+        }
+
+        function editProfile() {
+            alert('Profile editing coming soon!');
+        }
+
+        function viewPrivacy() {
+            alert('Privacy policy coming soon!');
+        }
+
+        function viewTerms() {
+            alert('Terms of service coming soon!');
+        }
+
+        function clearData() {
+            if (confirm('Are you sure? This will delete all your data permanently!')) {
+                localStorage.clear();
+                location.reload();
+            }
+        }
+
+        // Initialize challenges when app loads
+        if (localStorage.getItem('userData')) {
+            initializeChallenges();
+        }
+    </script>
+</body>
+</html>
