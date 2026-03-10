@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Digital Detox Champion</title>
+    <title>Digital Detox Champion | Ages 13+</title>
     <style>
         * {
             margin: 0;
@@ -510,7 +510,7 @@
         <div id="mainApp" class="screen">
             <!-- Header -->
             <div class="header">
-                <h1>Welcome, <span id="displayName">Champion</span>!</h1>
+                <h1>Welcome, <span id="displayName">123</span>!</h1>
                 <p>Keep crushing your goals!</p>
                 <div class="user-stats">
                     <div class="stat-card">
@@ -604,7 +604,6 @@
                         <div class="card-title">Today's Challenges</div>
                     </div>
                     <div id="challengesList">
-                        <!-- Challenges will be loaded here -->
                         <div class="challenge-item">
                             <div class="challenge-header">
                                 <div class="challenge-title">2-Hour Phone-Free Focus</div>
@@ -652,15 +651,14 @@
                     </div>
                 </div>
 
-                <!-- BLOG LINK CARD - NEW! -->
-                <div class="card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); cursor: pointer;" onclick="window.location.href='/blog.html'">
-                    <div style="display: flex; align-items: center; justify-content: space-between;">
-                        <div>
-                            <div style="color: white; font-size: 20px; font-weight: 600; margin-bottom: 5px;">📚 Read Our Blog</div>
-                            <div style="color: rgba(255,255,255,0.9); font-size: 14px;">Articles about digital wellness & productivity</div>
-                        </div>
-                        <div style="color: white; font-size: 24px;">→</div>
+                <!-- BLOG CARD - NEW! Same style as Tools -->
+                <div class="card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                    <div class="card-header" style="margin-bottom: 10px;">
+                        <div style="color: white; font-size: 20px; margin-right: 10px;">📚</div>
+                        <div style="color: white; font-size: 18px; font-weight: 600;">Blog</div>
                     </div>
+                    <p style="color: rgba(255,255,255,0.9); margin-bottom: 15px; font-size: 14px;">Read articles about digital wellness & productivity</p>
+                    <a href="/blog.html" class="btn" style="background: white; color: #667eea; display: block; text-decoration: none; text-align: center;">Read Our Blog →</a>
                 </div>
 
                 <!-- Recommended Tools -->
@@ -681,7 +679,7 @@
                         <div class="card-icon">📅</div>
                         <div class="card-title">7-Day History</div>
                     </div>
-                    <p style="color: #6b7280; text-align: center; padding: 40px 20px;">Track your screen time daily to see your history here!</p>
+                    <p style="color: #6b7280; text-align: center; padding: 40px 20px;">Sun, Mar 8<br>2.7h<br>📸 Instagram: 1.0h | 🎮 Games: 1.7h</p>
                 </div>
             </div>
 
@@ -692,12 +690,7 @@
                         <div class="card-icon">🏆</div>
                         <div class="card-title">Your Statistics</div>
                     </div>
-                    <div style="text-align: center; padding: 20px;">
-                        <div style="font-size: 16px; color: #6b7280; margin-bottom: 10px;">Current Goal: <strong style="color: #667eea;">4 hours/day</strong></div>
-                        <div style="font-size: 16px; color: #6b7280; margin-bottom: 10px;">Total Points: <strong style="color: #667eea;">190</strong></div>
-                        <div style="font-size: 16px; color: #6b7280; margin-bottom: 10px;">Rank: <strong style="color: #667eea;">#981</strong></div>
-                        <div style="font-size: 16px; color: #6b7280;">Challenges Completed: <strong style="color: #667eea;">2</strong></div>
-                    </div>
+                    <p style="color: #6b7280; text-align: center; padding: 20px;">Current Goal: 4 hours/day<br><br>Total Points: 190<br>Rank: #981<br>Challenges Completed: 2<br>Current Streak: 0 days 🔥</p>
                 </div>
             </div>
 
@@ -718,12 +711,12 @@
                         </div>
                     </a>
 
-                    <!-- Tools Link -->
+                    <!-- Recommended Tools -->
                     <a href="/tool.html" style="display: flex; align-items: center; padding: 15px; background: #f9fafb; border-radius: 12px; margin-bottom: 12px; text-decoration: none; color: inherit;">
                         <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 12px; font-size: 20px;">🛠️</div>
                         <div style="flex: 1;">
                             <div style="font-weight: 600; color: #1f2937; font-size: 15px;">Recommended Tools</div>
-                            <div style="font-size: 12px; color: #6b7280; margin-top: 2px;">Products to help your journey</div>
+                            <div style="font-size: 12px; color: #6b7280; margin-top: 2px;">Products to help your digital detox journey</div>
                         </div>
                     </a>
 
@@ -745,7 +738,7 @@
                         </div>
                     </div>
 
-                    <!-- Terms -->
+                    <!-- Terms of Service -->
                     <div onclick="alert('Terms of service coming soon!')" style="display: flex; align-items: center; padding: 15px; background: #f9fafb; border-radius: 12px; margin-bottom: 12px; cursor: pointer;">
                         <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 12px; font-size: 20px;">📄</div>
                         <div style="flex: 1;">
@@ -754,12 +747,12 @@
                         </div>
                     </div>
 
-                    <!-- Clear Data -->
-                    <div onclick="if(confirm('Delete all data?')) { localStorage.clear(); location.reload(); }" style="display: flex; align-items: center; padding: 15px; background: #f9fafb; border-radius: 12px; margin-bottom: 12px; cursor: pointer;">
+                    <!-- Clear All Data -->
+                    <div onclick="if(confirm('Are you sure? This will delete all your data!')) { localStorage.clear(); location.reload(); }" style="display: flex; align-items: center; padding: 15px; background: #f9fafb; border-radius: 12px; margin-bottom: 12px; cursor: pointer;">
                         <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 12px; font-size: 20px;">🗑️</div>
                         <div style="flex: 1;">
                             <div style="font-weight: 600; color: #1f2937; font-size: 15px;">Clear All Data</div>
-                            <div style="font-size: 12px; color: #6b7280; margin-top: 2px;">Delete all saved data</div>
+                            <div style="font-size: 12px; color: #6b7280; margin-top: 2px;">Delete all your data permanently</div>
                         </div>
                     </div>
                 </div>
@@ -794,6 +787,11 @@
         <h2 style="margin-bottom: 10px; color: #1f2937;">Success!</h2>
         <p style="color: #6b7280; margin-bottom: 20px;" id="popupMessage">Great job!</p>
         <button class="btn" onclick="closePopup()">Continue</button>
+    </div>
+
+    <!-- Footer -->
+    <div style="text-align: center; color: rgba(255,255,255,0.7); font-size: 11px; padding: 20px 0; margin-top: 20px;">
+        © 2026 Digital Detox Champion | Ages 13+ | <a href="#" style="color: rgba(255,255,255,0.9);">Privacy</a> | <a href="#" style="color: rgba(255,255,255,0.9);">Terms</a>
     </div>
 
     <script>
@@ -869,10 +867,10 @@
             if (totalHours <= userData.goal) {
                 userData.points += 50;
                 userData.streak += 1;
-                showPopup('Great! You stayed under your goal! +50 points! 🎉');
+                showPopup('Awesome! You stayed under your goal! +50 points! 🎉');
             } else {
                 userData.streak = 0;
-                showPopup('Screen time logged. Keep trying to meet your goal! 💪');
+                showPopup('Screen time logged. Keep trying! 💪');
             }
 
             localStorage.setItem('userData', JSON.stringify(userData));
@@ -892,7 +890,7 @@
         }
 
         function switchTab(tab) {
-            // Remove active from all nav items and tabs
+            // Remove active from all nav items
             document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
 
@@ -919,16 +917,6 @@
             document.getElementById('overlay').style.display = 'none';
             document.getElementById('successPopup').style.display = 'none';
         }
-
-        // Auto-update display on load
-        if (localStorage.getItem('userData')) {
-            updateDisplay();
-        }
     </script>
-
-    <!-- Footer -->
-    <div style="text-align: center; color: rgba(255,255,255,0.7); font-size: 11px; padding: 15px 0; margin-top: 20px;">
-        © 2026 Digital Detox Champion | <a href="/blog.html" style="color: rgba(255,255,255,0.9);">Ages 13+</a> | <a href="#" style="color: rgba(255,255,255,0.9);">Privacy</a> | <a href="#" style="color: rgba(255,255,255,0.9);">Terms</a>
-    </div>
 </body>
 </html>
