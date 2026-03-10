@@ -331,7 +331,6 @@
             padding: 8px;
             color: #9ca3af;
             cursor: pointer;
-            text-decoration: none;
         }
 
         .nav-item.active {
@@ -486,60 +485,6 @@
             color: #6b7280;
             margin-top: 2px;
         }
-
-        /* Settings Panel Styles */
-        .settings-panel {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 15px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .settings-item {
-            padding: 15px;
-            background: #f9fafb;
-            border-radius: 12px;
-            margin-bottom: 12px;
-            cursor: pointer;
-            transition: background 0.2s;
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .settings-item:hover {
-            background: #f3f4f6;
-        }
-
-        .settings-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 12px;
-            font-size: 20px;
-        }
-
-        .settings-info {
-            flex: 1;
-        }
-
-        .settings-title {
-            font-weight: 600;
-            color: #1f2937;
-            font-size: 15px;
-        }
-
-        .settings-desc {
-            font-size: 12px;
-            color: #6b7280;
-            margin-top: 2px;
-        }
     </style>
 </head>
 <body>
@@ -569,7 +514,7 @@
                 <p>Keep crushing your goals!</p>
                 <div class="user-stats">
                     <div class="stat-card">
-                        <div class="stat-value" id="totalPoints">0</div>
+                        <div class="stat-value" id="totalPoints">190</div>
                         <div class="stat-label">Points</div>
                     </div>
                     <div class="stat-card">
@@ -577,11 +522,11 @@
                         <div class="stat-label">Day Streak 🔥</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-value">#<span id="globalRank">999</span></div>
-                        <div class="stat-label">Global Rank</div>
+                        <div class="stat-value">#<span id="globalRank">981</span></div>
+                        <div class="stat-label">Personal Score</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-value" id="challengesDone">0</div>
+                        <div class="stat-value" id="challengesDone">2</div>
                         <div class="stat-label">Challenges</div>
                     </div>
                 </div>
@@ -589,23 +534,35 @@
 
             <!-- Home Tab -->
             <div id="homeTab" class="tab-content active">
+                <!-- Screen Time Logger -->
                 <div class="card">
                     <div class="card-header">
                         <div class="card-icon">📊</div>
                         <div class="card-title">Log Today's Screen Time</div>
                     </div>
+                    <div style="background: #fef3c7; padding: 15px; border-radius: 10px; margin-bottom: 15px;">
+                        <div style="text-align: center; color: #92400e; font-size: 12px; margin-bottom: 5px;">TODAY'S TOTAL SO FAR</div>
+                        <div style="text-align: center; color: #92400e; font-size: 32px; font-weight: bold;">0h 0m</div>
+                    </div>
                     <div class="time-input-group">
-                        <label>Total Time Today:</label>
+                        <label>Add Time:</label>
                         <input type="number" id="hoursInput" min="0" max="24" placeholder="0"> h
                         <input type="number" id="minsInput" min="0" max="59" placeholder="0"> m
                     </div>
                     <div class="app-breakdown">
-                        <strong style="color: #374151; display: block; margin-bottom: 10px;">Break it down (optional):</strong>
+                        <strong style="color: #374151; display: block; margin-bottom: 10px;">Break it down:</strong>
                         <div class="breakdown-item">
                             <span>📺 YouTube</span>
                             <div class="breakdown-inputs">
                                 <input type="number" id="youtube-h" min="0" placeholder="0">h
                                 <input type="number" id="youtube-m" min="0" max="59" placeholder="0">m
+                            </div>
+                        </div>
+                        <div class="breakdown-item">
+                            <span>👥 Facebook</span>
+                            <div class="breakdown-inputs">
+                                <input type="number" id="facebook-h" min="0" placeholder="0">h
+                                <input type="number" id="facebook-m" min="0" max="59" placeholder="0">m
                             </div>
                         </div>
                         <div class="breakdown-item">
@@ -630,22 +587,101 @@
                             </div>
                         </div>
                         <div class="breakdown-item">
-                            <span>📱 Other Apps</span>
+                            <span>📱 Other</span>
                             <div class="breakdown-inputs">
                                 <input type="number" id="other-h" min="0" placeholder="0">h
                                 <input type="number" id="other-m" min="0" max="59" placeholder="0">m
                             </div>
                         </div>
                     </div>
-                    <button class="btn" onclick="saveScreenTime()">Save Today's Data 📊</button>
+                    <button class="btn" onclick="saveScreenTime()">Add to Today's Total 📊</button>
                 </div>
 
+                <!-- Today's Challenges -->
                 <div class="card">
                     <div class="card-header">
                         <div class="card-icon">🎯</div>
                         <div class="card-title">Today's Challenges</div>
                     </div>
-                    <div id="challengesList"></div>
+                    <div id="challengesList">
+                        <!-- Challenges will be loaded here -->
+                        <div class="challenge-item">
+                            <div class="challenge-header">
+                                <div class="challenge-title">2-Hour Phone-Free Focus</div>
+                                <div class="challenge-points">+130 pts</div>
+                            </div>
+                            <div class="challenge-desc">No phone for 2 hours</div>
+                            <div class="challenge-actions">
+                                <button class="btn-small btn-complete" onclick="completeChallenge(130)">✓ Completed</button>
+                                <button class="btn-small btn-fail">✗ Failed</button>
+                            </div>
+                        </div>
+                        <div class="challenge-item">
+                            <div class="challenge-header">
+                                <div class="challenge-title">Phone-Free Dinner</div>
+                                <div class="challenge-points">+50 pts</div>
+                            </div>
+                            <div class="challenge-desc">Enjoy meals without phone</div>
+                            <div class="challenge-actions">
+                                <button class="btn-small btn-complete" onclick="completeChallenge(50)">✓ Completed</button>
+                                <button class="btn-small btn-fail">✗ Failed</button>
+                            </div>
+                        </div>
+                        <div class="challenge-item">
+                            <div class="challenge-header">
+                                <div class="challenge-title">Bedtime Digital Detox</div>
+                                <div class="challenge-points">+75 pts</div>
+                            </div>
+                            <div class="challenge-desc">1 hour before sleep</div>
+                            <div class="challenge-actions">
+                                <button class="btn-small btn-complete" onclick="completeChallenge(75)">✓ Completed</button>
+                                <button class="btn-small btn-fail">✗ Failed</button>
+                            </div>
+                        </div>
+                        <div class="challenge-item">
+                            <div class="challenge-header">
+                                <div class="challenge-title">Morning Without Phone</div>
+                                <div class="challenge-points">+60 pts</div>
+                            </div>
+                            <div class="challenge-desc">Start day phone-free</div>
+                            <div class="challenge-actions">
+                                <button class="btn-small btn-complete" onclick="completeChallenge(60)">✓ Completed</button>
+                                <button class="btn-small btn-fail">✗ Failed</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BLOG LINK CARD - NEW! -->
+                <div class="card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); cursor: pointer;" onclick="window.location.href='/blog.html'">
+                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                        <div>
+                            <div style="color: white; font-size: 20px; font-weight: 600; margin-bottom: 5px;">📚 Read Our Blog</div>
+                            <div style="color: rgba(255,255,255,0.9); font-size: 14px;">Articles about digital wellness & productivity</div>
+                        </div>
+                        <div style="color: white; font-size: 24px;">→</div>
+                    </div>
+                </div>
+
+                <!-- Recommended Tools -->
+                <div class="card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                    <div class="card-header" style="margin-bottom: 10px;">
+                        <div style="color: white; font-size: 20px; margin-right: 10px;">🛠️</div>
+                        <div style="color: white; font-size: 18px; font-weight: 600;">Recommended Tools</div>
+                    </div>
+                    <p style="color: rgba(255,255,255,0.9); margin-bottom: 15px; font-size: 14px;">Products to help your digital detox journey</p>
+                    <a href="/tool.html" class="btn" style="background: white; color: #667eea; display: block; text-decoration: none; text-align: center;">View Recommended Tools →</a>
+                </div>
+            </div>
+
+            <!-- History Tab -->
+            <div id="historyTab" class="tab-content">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">📅</div>
+                        <div class="card-title">7-Day History</div>
+                    </div>
+                    <p style="color: #6b7280; text-align: center; padding: 40px 20px;">Track your screen time daily to see your history here!</p>
                 </div>
             </div>
 
@@ -653,94 +689,77 @@
             <div id="statsTab" class="tab-content">
                 <div class="card">
                     <div class="card-header">
-                        <div class="card-icon">📈</div>
-                        <div class="card-title">Your Progress</div>
-                    </div>
-                    <div style="margin-bottom: 20px;">
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                            <span style="color: #6b7280;">Goal: <strong id="userGoal">4</strong>h/day</span>
-                            <span style="color: #6b7280;">Today: <strong id="todayUsage">0</strong>h</span>
-                        </div>
-                        <div style="background: #e5e7eb; height: 8px; border-radius: 4px; overflow: hidden;">
-                            <div id="progressBar" style="height: 100%; background: linear-gradient(90deg, #10b981 0%, #059669 100%); width: 0%;"></div>
-                        </div>
-                    </div>
-                    <div class="chart" id="weeklyChart"></div>
-                    <div style="display: flex; gap: 15px; margin-top: 15px;">
-                        <div style="flex: 1; text-align: center; padding: 15px; background: #f9fafb; border-radius: 12px;">
-                            <div style="font-size: 24px; font-weight: bold; color: #6366f1;" id="weekTotal">0</div>
-                            <div style="font-size: 12px; color: #6b7280; margin-top: 5px;">This Week</div>
-                        </div>
-                        <div style="flex: 1; text-align: center; padding: 15px; background: #f9fafb; border-radius: 12px;">
-                            <div style="font-size: 24px; font-weight: bold; color: #6366f1;" id="avgDaily">0</div>
-                            <div style="font-size: 12px; color: #6b7280; margin-top: 5px;">Daily Average</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
                         <div class="card-icon">🏆</div>
-                        <div class="card-title">Global Leaderboard</div>
+                        <div class="card-title">Your Statistics</div>
                     </div>
-                    <div id="leaderboardList"></div>
+                    <div style="text-align: center; padding: 20px;">
+                        <div style="font-size: 16px; color: #6b7280; margin-bottom: 10px;">Current Goal: <strong style="color: #667eea;">4 hours/day</strong></div>
+                        <div style="font-size: 16px; color: #6b7280; margin-bottom: 10px;">Total Points: <strong style="color: #667eea;">190</strong></div>
+                        <div style="font-size: 16px; color: #6b7280; margin-bottom: 10px;">Rank: <strong style="color: #667eea;">#981</strong></div>
+                        <div style="font-size: 16px; color: #6b7280;">Challenges Completed: <strong style="color: #667eea;">2</strong></div>
+                    </div>
                 </div>
             </div>
 
             <!-- Settings Tab -->
             <div id="settingsTab" class="tab-content">
-                <div class="settings-panel">
+                <div class="card">
                     <div class="card-header">
                         <div class="card-icon">⚙️</div>
                         <div class="card-title">Settings</div>
                     </div>
-                    
+
                     <!-- Blog Link - NEW! -->
-                    <a href="/blog.html" class="settings-item">
-                        <div class="settings-icon">📚</div>
-                        <div class="settings-info">
-                            <div class="settings-title">Blog</div>
-                            <div class="settings-desc">Read articles about digital wellness</div>
+                    <a href="/blog.html" style="display: flex; align-items: center; padding: 15px; background: #f9fafb; border-radius: 12px; margin-bottom: 12px; text-decoration: none; color: inherit;">
+                        <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 12px; font-size: 20px;">📚</div>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 600; color: #1f2937; font-size: 15px;">Blog</div>
+                            <div style="font-size: 12px; color: #6b7280; margin-top: 2px;">Read articles about digital wellness</div>
                         </div>
                     </a>
 
-                    <a href="/tool.html" class="settings-item">
-                        <div class="settings-icon">🛠️</div>
-                        <div class="settings-info">
-                            <div class="settings-title">Recommended Tools</div>
-                            <div class="settings-desc">Products to help your digital detox journey</div>
+                    <!-- Tools Link -->
+                    <a href="/tool.html" style="display: flex; align-items: center; padding: 15px; background: #f9fafb; border-radius: 12px; margin-bottom: 12px; text-decoration: none; color: inherit;">
+                        <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 12px; font-size: 20px;">🛠️</div>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 600; color: #1f2937; font-size: 15px;">Recommended Tools</div>
+                            <div style="font-size: 12px; color: #6b7280; margin-top: 2px;">Products to help your journey</div>
                         </div>
                     </a>
 
-                    <div class="settings-item" onclick="editProfile()">
-                        <div class="settings-icon">👤</div>
-                        <div class="settings-info">
-                            <div class="settings-title">Edit Profile</div>
-                            <div class="settings-desc">Update your name and goal</div>
+                    <!-- Edit Profile -->
+                    <div onclick="alert('Profile editing coming soon!')" style="display: flex; align-items: center; padding: 15px; background: #f9fafb; border-radius: 12px; margin-bottom: 12px; cursor: pointer;">
+                        <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 12px; font-size: 20px;">👤</div>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 600; color: #1f2937; font-size: 15px;">Edit Profile</div>
+                            <div style="font-size: 12px; color: #6b7280; margin-top: 2px;">Update your name and goal</div>
                         </div>
                     </div>
 
-                    <div class="settings-item" onclick="viewPrivacy()">
-                        <div class="settings-icon">🔒</div>
-                        <div class="settings-info">
-                            <div class="settings-title">Privacy Policy</div>
-                            <div class="settings-desc">Read our privacy policy</div>
+                    <!-- Privacy Policy -->
+                    <div onclick="alert('Privacy policy coming soon!')" style="display: flex; align-items: center; padding: 15px; background: #f9fafb; border-radius: 12px; margin-bottom: 12px; cursor: pointer;">
+                        <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 12px; font-size: 20px;">🔒</div>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 600; color: #1f2937; font-size: 15px;">Privacy Policy</div>
+                            <div style="font-size: 12px; color: #6b7280; margin-top: 2px;">Read our privacy policy</div>
                         </div>
                     </div>
 
-                    <div class="settings-item" onclick="viewTerms()">
-                        <div class="settings-icon">📄</div>
-                        <div class="settings-info">
-                            <div class="settings-title">Terms of Service</div>
-                            <div class="settings-desc">Read our terms</div>
+                    <!-- Terms -->
+                    <div onclick="alert('Terms of service coming soon!')" style="display: flex; align-items: center; padding: 15px; background: #f9fafb; border-radius: 12px; margin-bottom: 12px; cursor: pointer;">
+                        <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 12px; font-size: 20px;">📄</div>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 600; color: #1f2937; font-size: 15px;">Terms of Service</div>
+                            <div style="font-size: 12px; color: #6b7280; margin-top: 2px;">Read our terms</div>
                         </div>
                     </div>
 
-                    <div class="settings-item" onclick="clearData()">
-                        <div class="settings-icon">🗑️</div>
-                        <div class="settings-info">
-                            <div class="settings-title">Clear All Data</div>
-                            <div class="settings-desc">Delete all your data permanently</div>
+                    <!-- Clear Data -->
+                    <div onclick="if(confirm('Delete all data?')) { localStorage.clear(); location.reload(); }" style="display: flex; align-items: center; padding: 15px; background: #f9fafb; border-radius: 12px; margin-bottom: 12px; cursor: pointer;">
+                        <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 12px; font-size: 20px;">🗑️</div>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 600; color: #1f2937; font-size: 15px;">Clear All Data</div>
+                            <div style="font-size: 12px; color: #6b7280; margin-top: 2px;">Delete all saved data</div>
                         </div>
                     </div>
                 </div>
@@ -772,27 +791,24 @@
     <div class="overlay" id="overlay" onclick="closePopup()"></div>
     <div class="success-popup" id="successPopup">
         <div class="success-icon">✅</div>
-        <h2 style="margin-bottom: 10px;">Success!</h2>
-        <p style="color: #6b7280; margin-bottom: 20px;" id="popupMessage">Data saved successfully!</p>
+        <h2 style="margin-bottom: 10px; color: #1f2937;">Success!</h2>
+        <p style="color: #6b7280; margin-bottom: 20px;" id="popupMessage">Great job!</p>
         <button class="btn" onclick="closePopup()">Continue</button>
     </div>
 
     <script>
-        // (Your existing JavaScript code continues here - I'm keeping all the original functionality intact)
-        
-        // Initialize app
+        // User data
         let userData = {
-            name: '',
+            name: '123',
             email: '',
             goal: 4,
-            points: 0,
+            points: 190,
             streak: 0,
-            rank: 999,
-            challengesCompleted: 0,
-            screenTimeData: {}
+            rank: 981,
+            challengesCompleted: 2
         };
 
-        // Load saved data
+        // Load from localStorage
         if (localStorage.getItem('userData')) {
             userData = JSON.parse(localStorage.getItem('userData'));
             document.getElementById('welcomeScreen').classList.remove('active');
@@ -801,9 +817,14 @@
         }
 
         // Goal slider
-        document.getElementById('goalSlider').addEventListener('input', function() {
-            document.getElementById('goalValue').textContent = this.value;
-        });
+        const goalSlider = document.getElementById('goalSlider');
+        const goalValue = document.getElementById('goalValue');
+        
+        if (goalSlider) {
+            goalSlider.addEventListener('input', function() {
+                goalValue.textContent = this.value;
+            });
+        }
 
         function startApp() {
             const name = document.getElementById('userName').value;
@@ -811,20 +832,19 @@
             const goal = document.getElementById('goalSlider').value;
 
             if (!name || !email) {
-                alert('Please fill in all fields');
+                alert('Please fill in your name and email');
                 return;
             }
 
             userData.name = name;
             userData.email = email;
-            userData.goal = goal;
+            userData.goal = parseInt(goal);
             
             localStorage.setItem('userData', JSON.stringify(userData));
             
             document.getElementById('welcomeScreen').classList.remove('active');
             document.getElementById('mainApp').classList.add('active');
             updateDisplay();
-            initializeChallenges();
         }
 
         function updateDisplay() {
@@ -833,57 +853,34 @@
             document.getElementById('currentStreak').textContent = userData.streak;
             document.getElementById('globalRank').textContent = userData.rank;
             document.getElementById('challengesDone').textContent = userData.challengesCompleted;
-            document.getElementById('userGoal').textContent = userData.goal;
         }
 
         function saveScreenTime() {
             const hours = parseInt(document.getElementById('hoursInput').value) || 0;
             const mins = parseInt(document.getElementById('minsInput').value) || 0;
-            const totalHours = hours + (mins / 60);
 
-            if (totalHours === 0) {
+            if (hours === 0 && mins === 0) {
                 alert('Please enter your screen time');
                 return;
             }
 
-            const today = new Date().toISOString().split('T')[0];
-            userData.screenTimeData[today] = totalHours;
-            
+            const totalHours = hours + (mins / 60);
+
             if (totalHours <= userData.goal) {
                 userData.points += 50;
                 userData.streak += 1;
+                showPopup('Great! You stayed under your goal! +50 points! 🎉');
             } else {
                 userData.streak = 0;
+                showPopup('Screen time logged. Keep trying to meet your goal! 💪');
             }
 
             localStorage.setItem('userData', JSON.stringify(userData));
             updateDisplay();
-            showPopup('Screen time logged! ' + (totalHours <= userData.goal ? '+50 points! 🎉' : 'Keep trying! 💪'));
-        }
 
-        function initializeChallenges() {
-            const challenges = [
-                { title: '2-Hour Phone-Free Focus', desc: 'No phone for 2 hours', points: 130 },
-                { title: 'Phone-Free Dinner', desc: 'Enjoy meals without phone', points: 50 },
-                { title: 'Bedtime Digital Detox', desc: '1 hour before sleep', points: 75 },
-                { title: 'Morning Without Phone', desc: 'Start day phone-free', points: 60 }
-            ];
-
-            const html = challenges.map(c => `
-                <div class="challenge-item">
-                    <div class="challenge-header">
-                        <div class="challenge-title">${c.title}</div>
-                        <div class="challenge-points">+${c.points} pts</div>
-                    </div>
-                    <div class="challenge-desc">${c.desc}</div>
-                    <div class="challenge-actions">
-                        <button class="btn-small btn-complete" onclick="completeChallenge(${c.points})">✓ Completed</button>
-                        <button class="btn-small btn-fail">✗ Failed</button>
-                    </div>
-                </div>
-            `).join('');
-
-            document.getElementById('challengesList').innerHTML = html;
+            // Reset inputs
+            document.getElementById('hoursInput').value = '';
+            document.getElementById('minsInput').value = '';
         }
 
         function completeChallenge(points) {
@@ -901,7 +898,15 @@
 
             // Add active to clicked tab
             event.currentTarget.classList.add('active');
-            document.getElementById(tab + 'Tab').classList.add('active');
+            
+            const tabMap = {
+                'home': 'homeTab',
+                'history': 'historyTab',
+                'stats': 'statsTab',
+                'settings': 'settingsTab'
+            };
+            
+            document.getElementById(tabMap[tab]).classList.add('active');
         }
 
         function showPopup(message) {
@@ -915,29 +920,15 @@
             document.getElementById('successPopup').style.display = 'none';
         }
 
-        function editProfile() {
-            alert('Profile editing coming soon!');
-        }
-
-        function viewPrivacy() {
-            alert('Privacy policy coming soon!');
-        }
-
-        function viewTerms() {
-            alert('Terms of service coming soon!');
-        }
-
-        function clearData() {
-            if (confirm('Are you sure? This will delete all your data permanently!')) {
-                localStorage.clear();
-                location.reload();
-            }
-        }
-
-        // Initialize challenges when app loads
+        // Auto-update display on load
         if (localStorage.getItem('userData')) {
-            initializeChallenges();
+            updateDisplay();
         }
     </script>
+
+    <!-- Footer -->
+    <div style="text-align: center; color: rgba(255,255,255,0.7); font-size: 11px; padding: 15px 0; margin-top: 20px;">
+        © 2026 Digital Detox Champion | <a href="/blog.html" style="color: rgba(255,255,255,0.9);">Ages 13+</a> | <a href="#" style="color: rgba(255,255,255,0.9);">Privacy</a> | <a href="#" style="color: rgba(255,255,255,0.9);">Terms</a>
+    </div>
 </body>
 </html>
