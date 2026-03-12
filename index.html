@@ -308,9 +308,21 @@
             color: white;
         }
 
+        .btn-complete.completed {
+            background: #e5e7eb;
+            color: #6b7280;
+            cursor: not-allowed;
+        }
+
         .btn-fail {
             background: #ef4444;
             color: white;
+        }
+
+        .btn-fail.failed {
+            background: #e5e7eb;
+            color: #6b7280;
+            cursor: not-allowed;
         }
 
         .bottom-nav {
@@ -384,6 +396,30 @@
             background: rgba(0,0,0,0.5);
             z-index: 999;
         }
+
+        .history-item {
+            background: #f9fafb;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+
+        .history-date {
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+
+        .history-apps {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .history-app {
+            font-size: 13px;
+            color: #6b7280;
+        }
     </style>
 </head>
 <body>
@@ -441,55 +477,55 @@
                     </div>
                     <div style="background: #fef3c7; padding: 15px; border-radius: 10px; margin-bottom: 15px;">
                         <div style="text-align: center; color: #92400e; font-size: 12px; margin-bottom: 5px;">TODAY'S TOTAL SO FAR</div>
-                        <div style="text-align: center; color: #92400e; font-size: 32px; font-weight: bold;">0h 0m</div>
+                        <div style="text-align: center; color: #92400e; font-size: 32px; font-weight: bold;" id="todayTotal">0h 0m</div>
                     </div>
                     <div class="time-input-group">
                         <label>Add Time:</label>
-                        <input type="number" id="hoursInput" min="0" max="24" placeholder="0"> h
-                        <input type="number" id="minsInput" min="0" max="59" placeholder="0"> m
+                        <input type="number" id="hoursInput" min="0" max="24" placeholder="0" oninput="calculateTotal()"> h
+                        <input type="number" id="minsInput" min="0" max="59" placeholder="0" oninput="calculateTotal()"> m
                     </div>
                     <div class="app-breakdown">
                         <strong style="color: #374151; display: block; margin-bottom: 10px;">Break it down:</strong>
                         <div class="breakdown-item">
                             <span>📺 YouTube</span>
                             <div class="breakdown-inputs">
-                                <input type="number" id="youtube-h" min="0" placeholder="0">h
-                                <input type="number" id="youtube-m" min="0" max="59" placeholder="0">m
+                                <input type="number" id="youtube-h" min="0" max="24" placeholder="0" oninput="autoCalculate()">h
+                                <input type="number" id="youtube-m" min="0" max="59" placeholder="0" oninput="autoCalculate()">m
                             </div>
                         </div>
                         <div class="breakdown-item">
                             <span>👥 Facebook</span>
                             <div class="breakdown-inputs">
-                                <input type="number" id="facebook-h" min="0" placeholder="0">h
-                                <input type="number" id="facebook-m" min="0" max="59" placeholder="0">m
+                                <input type="number" id="facebook-h" min="0" max="24" placeholder="0" oninput="autoCalculate()">h
+                                <input type="number" id="facebook-m" min="0" max="59" placeholder="0" oninput="autoCalculate()">m
                             </div>
                         </div>
                         <div class="breakdown-item">
                             <span>📸 Instagram</span>
                             <div class="breakdown-inputs">
-                                <input type="number" id="instagram-h" min="0" placeholder="0">h
-                                <input type="number" id="instagram-m" min="0" max="59" placeholder="0">m
+                                <input type="number" id="instagram-h" min="0" max="24" placeholder="0" oninput="autoCalculate()">h
+                                <input type="number" id="instagram-m" min="0" max="59" placeholder="0" oninput="autoCalculate()">m
                             </div>
                         </div>
                         <div class="breakdown-item">
                             <span>💬 WhatsApp</span>
                             <div class="breakdown-inputs">
-                                <input type="number" id="whatsapp-h" min="0" placeholder="0">h
-                                <input type="number" id="whatsapp-m" min="0" max="59" placeholder="0">m
+                                <input type="number" id="whatsapp-h" min="0" max="24" placeholder="0" oninput="autoCalculate()">h
+                                <input type="number" id="whatsapp-m" min="0" max="59" placeholder="0" oninput="autoCalculate()">m
                             </div>
                         </div>
                         <div class="breakdown-item">
                             <span>🎮 Games</span>
                             <div class="breakdown-inputs">
-                                <input type="number" id="games-h" min="0" placeholder="0">h
-                                <input type="number" id="games-m" min="0" max="59" placeholder="0">m
+                                <input type="number" id="games-h" min="0" max="24" placeholder="0" oninput="autoCalculate()">h
+                                <input type="number" id="games-m" min="0" max="59" placeholder="0" oninput="autoCalculate()">m
                             </div>
                         </div>
                         <div class="breakdown-item">
                             <span>📱 Other</span>
                             <div class="breakdown-inputs">
-                                <input type="number" id="other-h" min="0" placeholder="0">h
-                                <input type="number" id="other-m" min="0" max="59" placeholder="0">m
+                                <input type="number" id="other-h" min="0" max="24" placeholder="0" oninput="autoCalculate()">h
+                                <input type="number" id="other-m" min="0" max="59" placeholder="0" oninput="autoCalculate()">m
                             </div>
                         </div>
                     </div>
@@ -509,8 +545,8 @@
                         </div>
                         <div class="challenge-desc">No phone for 2 hours</div>
                         <div class="challenge-actions">
-                            <button class="btn-small btn-complete" onclick="completeChallenge(130)">✓ Completed</button>
-                            <button class="btn-small btn-fail">✗ Failed</button>
+                            <button class="btn-small btn-complete" onclick="completeChallenge(130, this)">✓ Completed</button>
+                            <button class="btn-small btn-fail" onclick="failChallenge(this)">✗ Failed</button>
                         </div>
                     </div>
                     <div class="challenge-item">
@@ -520,8 +556,8 @@
                         </div>
                         <div class="challenge-desc">Enjoy meals without phone</div>
                         <div class="challenge-actions">
-                            <button class="btn-small btn-complete" onclick="completeChallenge(50)">✓ Completed</button>
-                            <button class="btn-small btn-fail">✗ Failed</button>
+                            <button class="btn-small btn-complete" onclick="completeChallenge(50, this)">✓ Completed</button>
+                            <button class="btn-small btn-fail" onclick="failChallenge(this)">✗ Failed</button>
                         </div>
                     </div>
                     <div class="challenge-item">
@@ -531,8 +567,8 @@
                         </div>
                         <div class="challenge-desc">1 hour before sleep</div>
                         <div class="challenge-actions">
-                            <button class="btn-small btn-complete" onclick="completeChallenge(75)">✓ Completed</button>
-                            <button class="btn-small btn-fail">✗ Failed</button>
+                            <button class="btn-small btn-complete" onclick="completeChallenge(75, this)">✓ Completed</button>
+                            <button class="btn-small btn-fail" onclick="failChallenge(this)">✗ Failed</button>
                         </div>
                     </div>
                     <div class="challenge-item">
@@ -542,13 +578,13 @@
                         </div>
                         <div class="challenge-desc">Start day phone-free</div>
                         <div class="challenge-actions">
-                            <button class="btn-small btn-complete" onclick="completeChallenge(60)">✓ Completed</button>
-                            <button class="btn-small btn-fail">✗ Failed</button>
+                            <button class="btn-small btn-complete" onclick="completeChallenge(60, this)">✓ Completed</button>
+                            <button class="btn-small btn-fail" onclick="failChallenge(this)">✗ Failed</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- BLOG CARD - NEW! -->
+                <!-- BLOG CARD -->
                 <div class="card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
                     <div class="card-header" style="margin-bottom: 10px;">
                         <div style="color: white; font-size: 20px; margin-right: 10px;">📚</div>
@@ -576,7 +612,9 @@
                         <div class="card-icon">📅</div>
                         <div class="card-title">7-Day History</div>
                     </div>
-                    <p style="color: #6b7280; text-align: center; padding: 40px 20px;">Track your screen time daily to see your history here!</p>
+                    <div id="historyList">
+                        <p style="color: #6b7280; text-align: center; padding: 40px 20px;">Track your screen time daily to see your history here!</p>
+                    </div>
                 </div>
             </div>
 
@@ -588,10 +626,10 @@
                         <div class="card-title">Your Statistics</div>
                     </div>
                     <div style="text-align: center; padding: 20px;">
-                        <div style="font-size: 16px; color: #6b7280; margin-bottom: 10px;">Current Goal: <strong style="color: #667eea;">4 hours/day</strong></div>
-                        <div style="font-size: 16px; color: #6b7280; margin-bottom: 10px;">Total Points: <strong style="color: #667eea;">190</strong></div>
-                        <div style="font-size: 16px; color: #6b7280; margin-bottom: 10px;">Rank: <strong style="color: #667eea;">#981</strong></div>
-                        <div style="font-size: 16px; color: #6b7280;">Challenges Completed: <strong style="color: #667eea;">2</strong></div>
+                        <div style="font-size: 16px; color: #6b7280; margin-bottom: 10px;">Current Goal: <strong style="color: #667eea;"><span id="statsGoal">4</span> hours/day</strong></div>
+                        <div style="font-size: 16px; color: #6b7280; margin-bottom: 10px;">Total Points: <strong style="color: #667eea;"><span id="statsPoints">190</span></strong></div>
+                        <div style="font-size: 16px; color: #6b7280; margin-bottom: 10px;">Rank: <strong style="color: #667eea;">#<span id="statsRank">981</span></strong></div>
+                        <div style="font-size: 16px; color: #6b7280;">Challenges Completed: <strong style="color: #667eea;"><span id="statsChallenges">2</span></strong></div>
                     </div>
                 </div>
             </div>
@@ -628,7 +666,7 @@
                         </div>
                     </div>
 
-                    <div onclick="alert('Privacy policy coming soon!')" style="display: flex; align-items: center; padding: 15px; background: #f9fafb; border-radius: 12px; margin-bottom: 12px; cursor: pointer;">
+                    <div onclick="alert('We respect your privacy and protect your data according to industry standards.')" style="display: flex; align-items: center; padding: 15px; background: #f9fafb; border-radius: 12px; margin-bottom: 12px; cursor: pointer;">
                         <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 12px; font-size: 20px;">🔒</div>
                         <div style="flex: 1;">
                             <div style="font-weight: 600; color: #1f2937; font-size: 15px;">Privacy Policy</div>
@@ -636,7 +674,7 @@
                         </div>
                     </div>
 
-                    <div onclick="alert('Terms coming soon!')" style="display: flex; align-items: center; padding: 15px; background: #f9fafb; border-radius: 12px; margin-bottom: 12px; cursor: pointer;">
+                    <div onclick="alert('By using this app, you agree to our terms of service. For ages 13+.')" style="display: flex; align-items: center; padding: 15px; background: #f9fafb; border-radius: 12px; margin-bottom: 12px; cursor: pointer;">
                         <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 12px; font-size: 20px;">📄</div>
                         <div style="flex: 1;">
                             <div style="font-weight: 600; color: #1f2937; font-size: 15px;">Terms of Service</div>
@@ -644,11 +682,11 @@
                         </div>
                     </div>
 
-                    <div onclick="if(confirm('Delete all data?')) { localStorage.clear(); location.reload(); }" style="display: flex; align-items: center; padding: 15px; background: #f9fafb; border-radius: 12px; cursor: pointer;">
+                    <div onclick="clearAllData()" style="display: flex; align-items: center; padding: 15px; background: #f9fafb; border-radius: 12px; cursor: pointer;">
                         <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 12px; font-size: 20px;">🗑️</div>
                         <div style="flex: 1;">
                             <div style="font-weight: 600; color: #1f2937; font-size: 15px;">Clear All Data</div>
-                            <div style="font-size: 12px; color: #6b7280; margin-top: 2px;">Delete all saved data</div>
+                            <div style="font-size: 12px; color: #6b7280; margin-top: 2px;">Delete all saved data permanently</div>
                         </div>
                     </div>
                 </div>
@@ -686,7 +724,7 @@
     </div>
 
     <div style="text-align: center; color: rgba(255,255,255,0.7); font-size: 11px; padding: 20px 0; margin-top: 20px;">
-        © 2026 Digital Detox Champion | Ages 13+ | <a href="#" style="color: rgba(255,255,255,0.9);">Privacy</a> | <a href="#" style="color: rgba(255,255,255,0.9);">Terms</a>
+        © 2026 Digital Detox Champion | Ages 13+ | Privacy | Terms
     </div>
 
     <script>
@@ -700,11 +738,19 @@
             challengesCompleted: 2
         };
 
+        let screenTimeHistory = [];
+
+        // Load data
         if (localStorage.getItem('userData')) {
             userData = JSON.parse(localStorage.getItem('userData'));
             document.getElementById('welcomeScreen').classList.remove('active');
             document.getElementById('mainApp').classList.add('active');
             updateDisplay();
+        }
+
+        if (localStorage.getItem('screenTimeHistory')) {
+            screenTimeHistory = JSON.parse(localStorage.getItem('screenTimeHistory'));
+            displayHistory();
         }
 
         const goalSlider = document.getElementById('goalSlider');
@@ -743,6 +789,58 @@
             document.getElementById('currentStreak').textContent = userData.streak;
             document.getElementById('globalRank').textContent = userData.rank;
             document.getElementById('challengesDone').textContent = userData.challengesCompleted;
+            document.getElementById('statsGoal').textContent = userData.goal;
+            document.getElementById('statsPoints').textContent = userData.points;
+            document.getElementById('statsRank').textContent = userData.rank;
+            document.getElementById('statsChallenges').textContent = userData.challengesCompleted;
+        }
+
+        // AUTO-CALCULATE FUNCTION
+        function autoCalculate() {
+            const youtube_h = parseInt(document.getElementById('youtube-h').value) || 0;
+            const youtube_m = parseInt(document.getElementById('youtube-m').value) || 0;
+            const facebook_h = parseInt(document.getElementById('facebook-h').value) || 0;
+            const facebook_m = parseInt(document.getElementById('facebook-m').value) || 0;
+            const instagram_h = parseInt(document.getElementById('instagram-h').value) || 0;
+            const instagram_m = parseInt(document.getElementById('instagram-m').value) || 0;
+            const whatsapp_h = parseInt(document.getElementById('whatsapp-h').value) || 0;
+            const whatsapp_m = parseInt(document.getElementById('whatsapp-m').value) || 0;
+            const games_h = parseInt(document.getElementById('games-h').value) || 0;
+            const games_m = parseInt(document.getElementById('games-m').value) || 0;
+            const other_h = parseInt(document.getElementById('other-h').value) || 0;
+            const other_m = parseInt(document.getElementById('other-m').value) || 0;
+
+            let totalHours = youtube_h + facebook_h + instagram_h + whatsapp_h + games_h + other_h;
+            let totalMins = youtube_m + facebook_m + instagram_m + whatsapp_m + games_m + other_m;
+
+            totalHours += Math.floor(totalMins / 60);
+            totalMins = totalMins % 60;
+
+            // 24 hour validation
+            if (totalHours > 24) {
+                alert('Total time cannot exceed 24 hours!');
+                return;
+            }
+
+            document.getElementById('hoursInput').value = totalHours;
+            document.getElementById('minsInput').value = totalMins;
+        }
+
+        function calculateTotal() {
+            const hours = parseInt(document.getElementById('hoursInput').value) || 0;
+            const mins = parseInt(document.getElementById('minsInput').value) || 0;
+
+            if (hours > 24) {
+                alert('Hours cannot exceed 24!');
+                document.getElementById('hoursInput').value = 24;
+                return;
+            }
+
+            if (mins > 59) {
+                alert('Minutes cannot exceed 59!');
+                document.getElementById('minsInput').value = 59;
+                return;
+            }
         }
 
         function saveScreenTime() {
@@ -756,6 +854,27 @@
 
             const totalHours = hours + (mins / 60);
 
+            // Save to history
+            const today = new Date().toLocaleDateString();
+            const entry = {
+                date: today,
+                hours: hours,
+                mins: mins,
+                apps: {
+                    youtube: `${document.getElementById('youtube-h').value || 0}h ${document.getElementById('youtube-m').value || 0}m`,
+                    facebook: `${document.getElementById('facebook-h').value || 0}h ${document.getElementById('facebook-m').value || 0}m`,
+                    instagram: `${document.getElementById('instagram-h').value || 0}h ${document.getElementById('instagram-m').value || 0}m`,
+                    whatsapp: `${document.getElementById('whatsapp-h').value || 0}h ${document.getElementById('whatsapp-m').value || 0}m`,
+                    games: `${document.getElementById('games-h').value || 0}h ${document.getElementById('games-m').value || 0}m`,
+                    other: `${document.getElementById('other-h').value || 0}h ${document.getElementById('other-m').value || 0}m`
+                }
+            };
+
+            screenTimeHistory.unshift(entry);
+            if (screenTimeHistory.length > 7) screenTimeHistory.pop();
+            
+            localStorage.setItem('screenTimeHistory', JSON.stringify(screenTimeHistory));
+
             if (totalHours <= userData.goal) {
                 userData.points += 50;
                 userData.streak += 1;
@@ -767,17 +886,100 @@
 
             localStorage.setItem('userData', JSON.stringify(userData));
             updateDisplay();
+            displayHistory();
 
+            // Update today total
+            document.getElementById('todayTotal').textContent = `${hours}h ${mins}m`;
+
+            // Reset inputs
             document.getElementById('hoursInput').value = '';
             document.getElementById('minsInput').value = '';
+            document.getElementById('youtube-h').value = '';
+            document.getElementById('youtube-m').value = '';
+            document.getElementById('facebook-h').value = '';
+            document.getElementById('facebook-m').value = '';
+            document.getElementById('instagram-h').value = '';
+            document.getElementById('instagram-m').value = '';
+            document.getElementById('whatsapp-h').value = '';
+            document.getElementById('whatsapp-m').value = '';
+            document.getElementById('games-h').value = '';
+            document.getElementById('games-m').value = '';
+            document.getElementById('other-h').value = '';
+            document.getElementById('other-m').value = '';
         }
 
-        function completeChallenge(points) {
+        function displayHistory() {
+            const historyList = document.getElementById('historyList');
+            
+            if (screenTimeHistory.length === 0) {
+                historyList.innerHTML = '<p style="color: #6b7280; text-align: center; padding: 40px 20px;">Track your screen time daily to see your history here!</p>';
+                return;
+            }
+
+            let html = '';
+            screenTimeHistory.forEach(entry => {
+                html += `
+                    <div class="history-item">
+                        <div class="history-date">${entry.date} - ${entry.hours}h ${entry.mins}m</div>
+                        <div class="history-apps">
+                            <div class="history-app">📺 YouTube: ${entry.apps.youtube}</div>
+                            <div class="history-app">👥 Facebook: ${entry.apps.facebook}</div>
+                            <div class="history-app">📸 Instagram: ${entry.apps.instagram}</div>
+                            <div class="history-app">💬 WhatsApp: ${entry.apps.whatsapp}</div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            historyList.innerHTML = html;
+        }
+
+        function completeChallenge(points, button) {
+            // Check if already completed
+            if (button.classList.contains('completed')) {
+                return;
+            }
+
+            // Add visual feedback
+            button.classList.add('completed');
+            button.textContent = '✓ Completed!';
+            button.disabled = true;
+
+            // Disable fail button in same challenge
+            const challengeItem = button.closest('.challenge-item');
+            const failButton = challengeItem.querySelector('.btn-fail');
+            if (failButton) {
+                failButton.disabled = true;
+                failButton.classList.add('failed');
+            }
+
             userData.points += points;
             userData.challengesCompleted += 1;
             localStorage.setItem('userData', JSON.stringify(userData));
             updateDisplay();
             showPopup(`Challenge completed! +${points} points! 🎉`);
+        }
+
+        function failChallenge(button) {
+            // Check if already failed
+            if (button.classList.contains('failed')) {
+                return;
+            }
+
+            // Add visual feedback
+            button.classList.add('failed');
+            button.textContent = '✗ Failed';
+            button.disabled = true;
+
+            // Disable complete button in same challenge
+            const challengeItem = button.closest('.challenge-item');
+            const completeButton = challengeItem.querySelector('.btn-complete');
+            if (completeButton) {
+                completeButton.disabled = true;
+                completeButton.classList.add('completed');
+            }
+
+            showPopup('Challenge marked as failed. Try again tomorrow! 💪');
         }
 
         function switchTab(tab) {
@@ -805,6 +1007,14 @@
         function closePopup() {
             document.getElementById('overlay').style.display = 'none';
             document.getElementById('successPopup').style.display = 'none';
+        }
+
+        function clearAllData() {
+            if (confirm('Are you sure you want to delete ALL your data? This cannot be undone!')) {
+                localStorage.clear();
+                alert('All data has been cleared. The page will now reload.');
+                location.reload();
+            }
         }
     </script>
 </body>
