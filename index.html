@@ -304,25 +304,23 @@
         }
 
         .btn-complete {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        .btn-complete.completed {
             background: #10b981;
             color: white;
         }
 
-        .btn-complete.completed {
-            background: #e5e7eb;
-            color: #6b7280;
-            cursor: not-allowed;
-        }
-
         .btn-fail {
-            background: #ef4444;
-            color: white;
+            background: #f3f4f6;
+            color: #374151;
         }
 
         .btn-fail.failed {
-            background: #e5e7eb;
-            color: #6b7280;
-            cursor: not-allowed;
+            background: #ef4444;
+            color: white;
         }
 
         .bottom-nav {
@@ -940,18 +938,12 @@
                 return;
             }
 
-            // Add visual feedback
+            // Add visual feedback - ONLY to this button
             button.classList.add('completed');
             button.textContent = '✓ Completed!';
             button.disabled = true;
 
-            // Disable fail button in same challenge
-            const challengeItem = button.closest('.challenge-item');
-            const failButton = challengeItem.querySelector('.btn-fail');
-            if (failButton) {
-                failButton.disabled = true;
-                failButton.classList.add('failed');
-            }
+            // Don't touch the fail button - leave it white
 
             userData.points += points;
             userData.challengesCompleted += 1;
@@ -966,18 +958,12 @@
                 return;
             }
 
-            // Add visual feedback
+            // Add visual feedback - ONLY to this button
             button.classList.add('failed');
             button.textContent = '✗ Failed';
             button.disabled = true;
 
-            // Disable complete button in same challenge
-            const challengeItem = button.closest('.challenge-item');
-            const completeButton = challengeItem.querySelector('.btn-complete');
-            if (completeButton) {
-                completeButton.disabled = true;
-                completeButton.classList.add('completed');
-            }
+            // Don't touch the complete button - leave it white
 
             showPopup('Challenge marked as failed. Try again tomorrow! 💪');
         }
